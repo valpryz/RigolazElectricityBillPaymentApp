@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "63006024024",
+    "firebase_url": "https://rigolaz-c5df3.firebaseio.com",
+    "project_id": "rigolaz-c5df3",
+    "storage_bucket": "rigolaz-c5df3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63006024024:android:b56f0affa8f96359b5c52d",
+        "android_client_info": {
+          "package_name": "com.rigolaz.rigolaz_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "63006024024-67bd848ck0unesuj5l9c9tvl0kplaeff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0qs6_EEbd0Kzcj0rY1JcBj9kNgDAgrL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "63006024024-67bd848ck0unesuj5l9c9tvl0kplaeff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

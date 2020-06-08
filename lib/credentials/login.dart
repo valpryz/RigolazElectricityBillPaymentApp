@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rigolaz_2/credentials/forgotpass.dart';
+import 'package:rigolaz_2/services/auth.dart';
 import 'entete.dart';
 
 class Login extends StatefulWidget {
@@ -8,6 +9,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  final AuthService _auth = AuthService();
+  
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -47,7 +51,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       SizedBox(height: 15),
-                       TextField(
+                      TextField(
                         style: TextStyle(
                           fontSize: 15,
                         ),
@@ -76,18 +80,26 @@ class _LoginState extends State<Login> {
                               color: Colors.white,
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            dynamic result = await _auth.signInAnon();
+                            if (result == null) {
+                              print('error signing in');
+                            } else {
+                              print('signed in');
+                              print(result.uid);
+                            }
+                          },
                         ),
                       ),
                       SizedBox(height: 5),
                       FlatButton(
                         onPressed: () {
                           Navigator.push(
-                context,
-                 MaterialPageRoute(
-                  builder: (context) => ForgotPass(),
-                ),
-              );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ForgotPass(),
+                            ),
+                          );
                         },
                         child: Text(
                           'Mot de passe oublié ?',
@@ -112,7 +124,8 @@ class _LoginState extends State<Login> {
                     ),
                     FlatButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/se_connecter/s_inscrire');
+                        Navigator.pushNamed(
+                            context, '/se_connecter/s_inscrire');
                       },
                       child: Text(
                         "S'enregistrer",
@@ -130,4 +143,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rigolaz_2/credentials/forgotpass.dart';
 import 'package:rigolaz_2/credentials/signup.dart';
 import 'package:rigolaz_2/historique/historique.dart';
+import 'package:rigolaz_2/models/user.dart';
 import 'package:rigolaz_2/moncompte/monCompte.dart';
 import 'package:rigolaz_2/parametres/parametres.dart';
 import 'package:rigolaz_2/recapitulatifPaiement/recapitulatif_paiement.dart';
-import 'package:rigolaz_2/rigolazconnected.dart';
-import 'package:rigolaz_2/rigolaznotconnected.dart';
+import 'package:rigolaz_2/services/auth.dart';
 import 'package:rigolaz_2/travaux/travaux.dart';
+import 'package:rigolaz_2/wrapper.dart';
 import './aide/aide.dart';
 import './aide/apropos.dart';
 import './aide/cgu.dart';
@@ -17,12 +19,17 @@ import './credentials/login.dart';
 import 'aide/questionsReponses.dart';
 import 'notifications/notifications.dart';
 
-void main() => runApp(
-      MaterialApp(
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<User>.value(
+      value: AuthService().user,
+      child: MaterialApp(
         theme: ThemeData(
           scaffoldBackgroundColor: Color(0xFFFFFFFF),
         ),
-        initialRoute: '/',
         routes: {
           '/astuces': (context) => AstucesEtConseils(),
           '/aide': (context) => Aide(),
@@ -41,7 +48,8 @@ void main() => runApp(
           '/recapitulatifachat': (context) => RecapitulatifPaiement()
         },
         debugShowCheckedModeBanner: false,
-        home: RigolazConnected(),
+        home: Wrapper(),
       ),
     );
-
+  }
+}

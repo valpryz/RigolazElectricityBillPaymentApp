@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rigolaz_2/services/auth.dart';
 import './ongletAchat.dart';
 import './ongletTelecomm.dart';
 import './ongletCode.dart';
@@ -40,21 +41,29 @@ Widget listtile(
     IconData icon,
     BuildContext context,
     String url,
-    Color color}) {
+    Color color,
+    Function onTap}) {
   return ListTile(
     leading: Icon(icon),
-    title: Text(
-      title,
-      style: TextStyle(color: color, fontSize: 17, fontFamily: 'Actor'),
+    title: GestureDetector(
+        onTap: onTap,
+          child: Text(
+        title,
+        style: TextStyle(color: color, fontSize: 17, fontFamily: 'Actor'),
+      ),
     ),
     onTap: () {
       // Navigator.pop(context);
       Navigator.pushNamed(context, url);
     },
+    
   );
 }
 
 class RigolazConnected extends StatelessWidget {
+
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     {
@@ -103,17 +112,20 @@ class RigolazConnected extends StatelessWidget {
                       title: 'Compte',
                       icon: Icons.person,
                       context: context,
-                      color: kDrawerIsOffline),
+                      url: '/mon_compte',
+                      color: kDrawerIsConnected),
                   listtile(
                       title: 'Notifications',
                       icon: Icons.notifications,
                       context: context,
-                      color: kDrawerIsOffline),
+                      url: '/notifications',
+                      color: kDrawerIsConnected),
                   listtile(
                       title: 'Historique',
                       icon: Icons.timer,
                       context: context,
-                      color: kDrawerIsOffline),
+                      url: '/historique',
+                      color: kDrawerIsConnected),
                   listtile(
                       title: 'Travaux Programmés',
                       icon: Icons.build,
@@ -130,12 +142,23 @@ class RigolazConnected extends StatelessWidget {
                       title: 'Aide',
                       icon: Icons.question_answer,
                       context: context,
-                      url: '/aide'),
+                      url: '/aide',
+                      color: kDrawerIsConnected),
                   listtile(
                       title: 'Astuces & Conseils',
                       icon: Icons.contact_phone,
                       context: context,
-                      url: '/astuces')
+                      url: '/astuces',
+                      color: kDrawerIsConnected),
+                  listtile(
+                      title: 'Deconnexion',
+                      icon: Icons.contact_phone,
+                      context: context,
+                      url: '/astuces',
+                      color: kDrawerIsConnected,
+                      onTap: () async{
+                        await _auth.signOut();
+                      })
                   // ListTile(
                   //   leading: Icon(Icons.contact_phone),
                   //   title: Text(

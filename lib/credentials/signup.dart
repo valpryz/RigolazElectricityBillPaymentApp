@@ -11,6 +11,7 @@ class SignUp extends StatefulWidget {
 enum Gender { male, female }
 
 class _SignUpState extends State<SignUp> {
+
   var finaldate;
 
   void callDatePicker() async {
@@ -36,6 +37,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   Gender _gender = Gender.female;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -55,85 +57,107 @@ class _SignUpState extends State<SignUp> {
               Entete(),
               Padding(
                 padding: const EdgeInsets.all(36.0),
-                child: Column(
-                  children: <Widget>[
-                    ZoneSaisie(),
-                    SizedBox(height: 10),
-                    ZoneSaisie(),
-                    SizedBox(height: 10),
-                    ZoneSaisie(),
-                    SizedBox(height: 10),
-                    ZoneSaisie(),
-                    SizedBox(height: 10),
-                    Row(
-                      children: <Widget>[
-                        FlatButton.icon(
-                          onPressed: callDatePicker,
-                          icon: Icon(Icons.date_range),
-                          label: finaldate == null
-                              ? Text(
-                                  "Selectionner la date",
+                child: Form(
+                  child: Column(
+                    children: <Widget>[
+                      ZoneSaisie(
+                        labelText: 'Pseudo',
+                        textAlign: TextAlign.center,
+                        onChanged: (value) {},
+                      ),
+                      SizedBox(height: 10),
+                      ZoneSaisie(
+                        labelText: 'Numéro Compteur',
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.center,
+                        onChanged: (value) {},
+                      ),
+                      SizedBox(height: 10),
+                      ZoneSaisie(
+                        labelText: 'Numéro de Téléphone',
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.center,
+                        onChanged: (value) {},
+                      ),
+                      SizedBox(height: 10),
+                      ZoneSaisie(
+                        labelText: 'Adresse Mail',
+                        textAlign: TextAlign.center,
+                        onChanged: (value) {},
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: <Widget>[
+                          FlatButton.icon(
+                            onPressed: callDatePicker,
+                            icon: Icon(Icons.date_range),
+                            label: finaldate == null
+                                ? Text(
+                                    "Sélectionner la date",
+                                    style: TextStyle(
+                                        fontFamily: 'Actor', fontSize: 18),
+                                  )
+                                : Text(
+                                    "$finaldate",
+                                    style: TextStyle(
+                                        fontFamily: 'Actor', fontSize: 18),
+                                  ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Text(
+                            'Sexe:',
+                            style: TextStyle(fontFamily: 'Actor', fontSize: 20),
+                          ),
+                          Container(
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  'F',
                                   style: TextStyle(
-                                      fontFamily: 'Actor', fontSize: 18),
-                                )
-                              : Text(
-                                  "$finaldate",
-                                  style: TextStyle(
-                                      fontFamily: 'Actor', fontSize: 18),
+                                      fontFamily: 'Actor', fontSize: 20),
                                 ),
-                        ), 
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Text(
-                          'Sexe:',
-                          style: TextStyle(fontFamily: 'Actor', fontSize: 20),
-                        ),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                'F',
-                                style: TextStyle(
-                                    fontFamily: 'Actor', fontSize: 20),
-                              ),
-                              Radio(
-                                value: Gender.female,
-                                groupValue: _gender,
-                                onChanged: (Gender value) {
-                                  setState(() {
-                                    _gender = value;
-                                  });
-                                },
-                              ),
-                            ],
+                                Radio(
+                                  value: Gender.female,
+                                  groupValue: _gender,
+                                  onChanged: (Gender value) {
+                                    setState(() {
+                                      _gender = value;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Text('M',
+                          Container(
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  'M',
                                   style: TextStyle(
-                                      fontFamily: 'Actor', fontSize: 20),),
-                              Radio(
-                                value: Gender.male,
-                                groupValue: _gender,
-                                onChanged: (Gender value) {
-                                  setState(() {
-                                    _gender = value;
-                                    print(value);
-                                  });
-                                },
-                              ),
-                            ],
+                                      fontFamily: 'Actor', fontSize: 20),
+                                ),
+                                Radio(
+                                  value: Gender.male,
+                                  groupValue: _gender,
+                                  onChanged: (Gender value) {
+                                    setState(() {
+                                      _gender = value;
+                                      print(value);
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(

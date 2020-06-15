@@ -29,41 +29,46 @@ class _ForgotPassState extends State<ForgotPass> {
               ),
               Expanded(
                 flex: 9,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(36.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                              'Bien vouloir renseigner pour récupération de Mot de passe : ',
+                child: Form(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(36.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                                'Bien vouloir renseigner pour récupération de Mot de passe : ',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontFamily: 'Actor',
+                                )),
+                            SizedBox(
+                              height: 35,
+                            ),
+                            ZoneSaisie(
+                              labelText: 'Numero Compteur',
+                              keyboardType: TextInputType.number,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontFamily: 'Actor',
-                              )),
-                          SizedBox(
-                            height: 35,
-                          ),
-                          ZoneSaisie()
-                        ],
+                              onChanged: (value) {},
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: RaisedButton(
-                        color: Colors.blue,
-                        onPressed: () {},
-                        child: Text(
-                          'OK',
-                          style: TextStyle(
-                            color: Colors.white
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: RaisedButton(
+                          color: Colors.blue,
+                          onPressed: () {},
+                          child: Text(
+                            'OK',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               )
             ],

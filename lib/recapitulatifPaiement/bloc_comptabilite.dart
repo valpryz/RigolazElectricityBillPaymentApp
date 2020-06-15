@@ -17,11 +17,21 @@ class _BlocComptabiliteState extends State<BlocComptabilite> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 35),
-              child: ZoneSaisie(),
+              child: ZoneSaisie(
+                labelText: 'Numéro de Compteur',
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.end,
+                onChanged: (value) {},
+              ),
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 35),
-              child: ZoneSaisie(),
+              child: ZoneSaisie(
+                labelText: 'Montant',
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.end,
+                onChanged: (value) {},
+              ),
             ),
             SizedBox(
               height: 20,
@@ -30,20 +40,20 @@ class _BlocComptabiliteState extends State<BlocComptabilite> {
               child: Column(
                 children: <Widget>[
                   Text(
-                'Quantité:',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    fontFamily: 'Actor'),
-              ),
-              Text(
-                '200 KWH',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    fontFamily: 'Actor',
-                    color: Colors.green[500]),
-              )
+                    'Quantité:',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        fontFamily: 'Actor'),
+                  ),
+                  Text(
+                    '200 KWH',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        fontFamily: 'Actor',
+                        color: Colors.green[500]),
+                  )
                 ],
               ),
             )

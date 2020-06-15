@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rigolaz_2/credentials/forgotpass.dart';
+import 'package:rigolaz_2/credentials/zone_saisie.dart';
 import 'package:rigolaz_2/services/auth.dart';
 import 'entete.dart';
 
@@ -33,40 +34,14 @@ class _LoginState extends State<Login> {
                   padding: const EdgeInsets.all(36.0),
                   child: Column(
                     children: <Widget>[
-                      TextField(
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                        autofocus: false,
-                        obscureText: false,
-                        keyboardType: TextInputType.text,
-                        textAlign: TextAlign.end,
-                        decoration: InputDecoration(
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                          border: OutlineInputBorder(
-                            gapPadding: 1.0,
-                          ),
-                          labelText: 'Identifiant',
-                        ),
+                      ZoneSaisie(
+                        labelText: 'Identifiant',
+                        textAlign: TextAlign.start,
                       ),
                       SizedBox(height: 15),
-                      TextField(
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-                        autofocus: false,
-                        obscureText: true,
-                        keyboardType: TextInputType.text,
-                        textAlign: TextAlign.end,
-                        decoration: InputDecoration(
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                          border: OutlineInputBorder(
-                            gapPadding: 1.0,
-                          ),
-                          labelText: 'Mot de Passe',
-                        ),
+                      ZoneSaisie(
+                        labelText: 'Mot de passe',
+                        textAlign: TextAlign.start,
                       ),
                       SizedBox(height: 15),
                       Container(

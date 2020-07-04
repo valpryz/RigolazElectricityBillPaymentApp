@@ -10,9 +10,32 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   final AuthService _auth = AuthService();
-  
+  final _loginFormKey = GlobalKey<FormState>();
+
+  String identifiant = '';
+  String motDePasse = '';
+  String error = '';
+
+  String emailValidator(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value)) {
+      return 'Le format de votre email est invalide!';
+    } else {
+      return null;
+    }
+  }
+
+  String pwdValidator(String value) {
+    if (value.length < 8) {
+      return 'Minimum 8 caractères SVP!';
+    } else {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -32,59 +55,97 @@ class _LoginState extends State<Login> {
                 Entete(),
                 Padding(
                   padding: const EdgeInsets.all(36.0),
-                  child: Column(
-                    children: <Widget>[
-                      ZoneSaisie(
-                        labelText: 'Identifiant',
-                        textAlign: TextAlign.start,
-                      ),
-                      SizedBox(height: 15),
-                      ZoneSaisie(
-                        labelText: 'Mot de passe',
-                        textAlign: TextAlign.start,
-                      ),
-                      SizedBox(height: 15),
-                      Container(
-                        width: width,
-                        child: RaisedButton(
-                          padding: EdgeInsets.all(15),
-                          color: Colors.blue,
-                          child: Text(
-                            'SE CONNECTER',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          onPressed: () async {
-                            dynamic result = await _auth.signInAnon();
-                            if (result == null) {
-                              print('error signing in');
-                            } else {
-                              print('signed in');
-                              print(result.uid);
-                            }
+                  child: Form(
+                    key: _loginFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          error,
+                          style: TextStyle(color: Colors.red, fontSize: 14.0),
+                        ),
+                        SizedBox(height: 15),
+                        ZoneSaisie(
+                          obscureText: false,
+                          labelText: 'Identifiant',
+                          textAlign: TextAlign.start,
+                          validator: emailValidator,
+                          onChanged: (val) {
+                            setState(() {
+                              identifiant = val;
+                            });
                           },
                         ),
-                      ),
-                      SizedBox(height: 5),
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ForgotPass(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Mot de passe oublié ?',
-                          style: TextStyle(
-                              fontFamily: 'Actor',
-                              fontSize: 17,
-                              color: Colors.blue),
+                        SizedBox(height: 15),
+                        ZoneSaisie(
+                          obscureText: true,
+                          labelText: 'Mot de passe',
+                          textAlign: TextAlign.start,
+                          validator: pwdValidator,
+                          onChanged: (val) {
+                            setState(() {
+                              motDePasse = val;
+                            });
+                          },
                         ),
-                      )
-                    ],
+                        SizedBox(height: 15),
+                        Container(
+                          width: width,
+                          child: RaisedButton(
+                            padding: EdgeInsets.all(15),
+                            color: Colors.blue,
+                            child: Text(
+                              'SE CONNECTER',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            onPressed: () async {
+                              // dynamic result = await _auth.signInAnon();
+                              // if (result == null) {
+                              //   print('error signing in');
+                              // } else {
+                              //   print('signed in');
+                              //   print(result.uid);
+                              // }
+
+                              if (_loginFormKey.currentState.validate()) {
+                                print(motDePasse);
+                                print(identifiant);
+                                dynamic result =
+                                    await _auth.signInWithEmailAndPassword(
+                                        identifiant, motDePasse);
+                                if (result == null) {
+                                  setState(() {
+                                    error =
+                                        'Identifiant ou mot de passe erroné';
+                                  });
+                                }else {
+                                  Navigator.of(context).pop();
+                                }
+                              }
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ForgotPass(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Mot de passe oublié ?',
+                            style: TextStyle(
+                                fontFamily: 'Actor',
+                                fontSize: 17,
+                                color: Colors.blue),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Row(

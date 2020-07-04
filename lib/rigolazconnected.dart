@@ -88,23 +88,6 @@ class RigolazConnected extends StatelessWidget {
                       Image.asset(
                         'images/logo_rigolaz.png',
                         width: 150,
-                      ),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/se_connecter');
-                        },
-                        title: Text(
-                          'Déconnecté',
-                          style: TextStyle(
-                            color: Colors.grey[900],
-                            fontSize: 18,
-                          ),
-                        ),
-                        subtitle: Text('Se connecter?'),
-                        trailing: Icon(Icons.account_circle),
                       )
                     ]),
                   ),
@@ -151,8 +134,8 @@ class RigolazConnected extends StatelessWidget {
                       url: '/astuces',
                       color: kDrawerIsConnected),
                   listtile(
-                      title: 'Deconnexion',
-                      icon: Icons.contact_phone,
+                      title: 'Déconnexion',
+                      icon: Icons.cancel,
                       context: context,
                       url: '/astuces',
                       color: kDrawerIsConnected,

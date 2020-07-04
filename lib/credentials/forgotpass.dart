@@ -48,9 +48,11 @@ class _ForgotPassState extends State<ForgotPass> {
                               height: 35,
                             ),
                             ZoneSaisie(
-                              labelText: 'Numero Compteur',
+                              obscureText: false,
+                              maxLength: 12,
+                              labelText: 'Numéro Compteur',
                               keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
+                              textAlign: TextAlign.end,
                               onChanged: (value) {},
                             )
                           ],

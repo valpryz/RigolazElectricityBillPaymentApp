@@ -15,8 +15,14 @@ class _BlocCoordonneesState extends State<BlocCoordonnees> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Image.asset('images/mtn.png'),
-            ZoneSaisie(),
-            ZoneSaisie(),
+            ZoneSaisie(
+              obscureText: false,
+              textAlign: TextAlign.start,
+            ),
+            ZoneSaisie(
+              obscureText: false,
+              textAlign: TextAlign.start,
+            ),
             Text(
               "Composez le *126# et renseignez votre code MTN Mobile Money",
               style: TextStyle(fontSize: 17, fontFamily: 'Actor'),

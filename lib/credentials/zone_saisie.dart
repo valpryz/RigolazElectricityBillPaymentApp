@@ -6,17 +6,24 @@ class ZoneSaisie extends StatelessWidget {
   final String labelText;
   final TextInputType keyboardType;
   final TextAlign textAlign;
+  final int maxLength;
+  final Function validator;
   ZoneSaisie(
-      {this.obscureText, this.onChanged, this.labelText, this.keyboardType, this.textAlign});
+      {this.obscureText,
+      this.onChanged,
+      this.labelText,
+      this.keyboardType,
+      this.textAlign,
+      this.maxLength,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: TextStyle(
-        fontSize: 15,
-        fontFamily: 'Actor'
-      ),
+      style: TextStyle(fontSize: 17, fontFamily: 'Actor'),
+      validator: validator,
       obscureText: obscureText,
+      maxLength: maxLength,
       onChanged: onChanged,
       keyboardType: keyboardType,
       textAlign: textAlign,

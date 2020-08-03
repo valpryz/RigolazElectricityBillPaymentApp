@@ -4,6 +4,7 @@ import 'package:rigolaz_2/credentials/forgotpass.dart';
 import 'package:rigolaz_2/credentials/signup.dart';
 import 'package:rigolaz_2/historique/historique.dart';
 import 'package:rigolaz_2/models/user.dart';
+import 'package:rigolaz_2/moncompte/modifierCompte.dart';
 import 'package:rigolaz_2/moncompte/monCompte.dart';
 import 'package:rigolaz_2/parametres/parametres.dart';
 import 'package:rigolaz_2/recapitulatifPaiement/recapitulatif_paiement.dart';
@@ -17,6 +18,8 @@ import './aide/contact.dart';
 import './astucesEtConseils/astucesEtConseils.dart';
 import './credentials/login.dart';
 import 'aide/questionsReponses.dart';
+import 'moncompte/infosCompte.dart';
+import 'moncompte/supprimerCompte.dart';
 import 'notifications/notifications.dart';
 
 void main() => runApp(MyApp());
@@ -41,6 +44,9 @@ class MyApp extends StatelessWidget {
           '/se_connecter/s_inscrire': (context) => SignUp(),
           '/se_connecter/forgotpass': (context) => ForgotPass(),
           '/mon_compte': (context) => MonCompte(),
+          '/mon_compte/modifier_compte': (context) => ModifierCompte(),
+          '/mon_compte/infos_compte': (context) => InfosCompte(),
+          '/mon_compte/supprimer_compte': (context) => SupprimerCompte(),
           '/notifications': (context) => Notifications(),
           '/historique': (context) => Historique(),
           '/travaux': (context) => Travaux(),

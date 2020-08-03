@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rigolaz_2/credentials/entete.dart';
+import 'package:rigolaz_2/services/password_generator.dart';
 import 'zone_saisie.dart';
 import 'dart:async';
 
@@ -11,10 +12,14 @@ class SignUp extends StatefulWidget {
 enum Gender { male, female }
 
 class _SignUpState extends State<SignUp> {
-  String pseudo;
-  String numeroCompteur;
-  String numeroTelephone;
-  String adresseMail;
+  final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
+
+  TextEditingController pseudo;
+  TextEditingController numeroCompteur;
+  TextEditingController numeroTelephone;
+  TextEditingController adresseMail;
+
+  String _generatedPassword = generatePassword(true, true, true, true, 8);
 
   var finaldate;
 
@@ -42,6 +47,15 @@ class _SignUpState extends State<SignUp> {
 
   Gender _gender = Gender.female;
 
+  @override
+  initState() {
+    pseudo = TextEditingController();
+    numeroCompteur = TextEditingController();
+    numeroTelephone = TextEditingController();
+    adresseMail = TextEditingController();
+    super.initState();
+  }
+
   String emailValidator(String value) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -53,8 +67,6 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  final _formkey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -64,31 +76,38 @@ class _SignUpState extends State<SignUp> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-                  child: Container(
+          child: Container(
             padding: EdgeInsets.all(5),
             width: width,
             height: height,
             child: Form(
-              key: _formkey,
+              key: _registerFormKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Entete(),
                   Padding(
-                    padding: const EdgeInsets.all(36.0),
+                    padding: const EdgeInsets.all(30.0),
                     child: Column(
                       children: <Widget>[
                         ZoneSaisie(
-                          obscureText: false,
-                          labelText: 'Pseudo',
-                          textAlign: TextAlign.start,
-                          onChanged: (value) {
-                            setState(() {
-                              pseudo = value;
-                            });
-                          },
-                        ),
+                            controller: pseudo,
+                            obscureText: false,
+                            labelText: 'Pseudo',
+                            textAlign: TextAlign.start,
+                            // ignore: missing_return
+                            validator: (val) {
+                              if (val.length < 3) {
+                                return "Entrez un pseudo valide!";
+                              }
+                            }
+                            // onChanged: (value) {
+                            //   setState(() {
+                            //     pseudo = value;
+                            //   });
+                            // },
+                            ),
                         SizedBox(height: 10),
                         ZoneSaisie(
                           obscureText: false,
@@ -96,11 +115,12 @@ class _SignUpState extends State<SignUp> {
                           maxLength: 12,
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.start,
-                          onChanged: (value) {
-                            setState(() {
-                              numeroCompteur = value;
-                            });
-                          },
+                          controller: numeroCompteur,
+                          // onChanged: (value) {
+                          //   setState(() {
+                          //     numeroCompteur = value;
+                          //   });
+                          // },
                         ),
                         SizedBox(height: 10),
                         ZoneSaisie(
@@ -109,24 +129,27 @@ class _SignUpState extends State<SignUp> {
                           maxLength: 9,
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.start,
-                          onChanged: (value) {
-                            setState(() {
-                              numeroTelephone = value;
-                            });
-                          },
+                          controller: numeroTelephone,
+                          // onChanged: (value) {
+                          //   setState(() {
+                          //     numeroTelephone = value;
+                          //   });
+                          // },
                         ),
                         SizedBox(height: 10),
                         ZoneSaisie(
                           obscureText: false,
                           labelText: 'Adresse Mail',
                           textAlign: TextAlign.start,
-                          onChanged: (value) {
-                            setState(() {
-                              adresseMail = value;
-                            });
-                          },
+                          controller: adresseMail,
+                          validator: emailValidator,
+                          // onChanged: (value) {
+                          //   setState(() {
+                          //     adresseMail = value;
+                          //   });
+                          // },
                         ),
-                        SizedBox(height: 10),
+                        //SizedBox(height: 10),
                         Row(
                           children: <Widget>[
                             FlatButton.icon(
@@ -146,13 +169,14 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        //SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Text(
                               'Sexe:',
-                              style: TextStyle(fontFamily: 'Actor', fontSize: 20),
+                              style:
+                                  TextStyle(fontFamily: 'Actor', fontSize: 20),
                             ),
                             Container(
                               child: Row(
@@ -200,8 +224,8 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 35),
-                    width: 150,
+                    margin: EdgeInsets.only(bottom: 50),
+                    width: 100,
                     child: RaisedButton(
                       padding: EdgeInsets.all(15),
                       color: Colors.blue,
@@ -212,13 +236,19 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                       onPressed: () async {
-                        print(pseudo);
-                        print(numeroCompteur);
-                        print(numeroTelephone);
-                        print(adresseMail);
-                        print(finaldate);
-                        print(_gender);
-                        TextEditingController().clear();
+                        if (_registerFormKey.currentState.validate()) {
+                          print(pseudo);
+                          print(numeroCompteur);
+                          print(numeroTelephone);
+                          print(adresseMail);
+                          print(finaldate);
+                          print(_gender);
+                          print(_generatedPassword);
+                          pseudo.clear();
+                          numeroCompteur.clear();
+                          numeroTelephone.clear();
+                          adresseMail.clear();
+                        }
                       },
                     ),
                   )

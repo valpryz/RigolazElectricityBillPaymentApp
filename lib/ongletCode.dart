@@ -51,6 +51,10 @@ class OngletCode extends StatelessWidget {
               subTitle: 'Consumption in Last Day',
               code: '813'),
           list(
+              title: 'Energie mensuelle consommée',
+              subTitle: 'monthly energy consumed',
+              code: '814'),
+          list(
               title: 'Date de la Derniere Recharge',
               subTitle: 'Date of Last Recharge',
               code: '815'),

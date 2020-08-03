@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rigolaz_2/credentials/forgotpass.dart';
 import 'package:rigolaz_2/credentials/zone_saisie.dart';
 import 'package:rigolaz_2/services/auth.dart';
+import 'package:rigolaz_2/travaux/loading.dart';
 import 'entete.dart';
 
 class Login extends StatefulWidget {
@@ -12,6 +13,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final AuthService _auth = AuthService();
   final _loginFormKey = GlobalKey<FormState>();
+  bool loading = false;
 
   String identifiant = '';
   String motDePasse = '';
@@ -41,7 +43,7 @@ class _LoginState extends State<Login> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return SafeArea(
+    return loading ? Loading() : SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Container(
@@ -111,6 +113,9 @@ class _LoginState extends State<Login> {
                               if (_loginFormKey.currentState.validate()) {
                                 print(motDePasse);
                                 print(identifiant);
+                                setState(() {
+                                  loading = true;
+                                });
                                 dynamic result =
                                     await _auth.signInWithEmailAndPassword(
                                         identifiant, motDePasse);
@@ -118,6 +123,7 @@ class _LoginState extends State<Login> {
                                   setState(() {
                                     error =
                                         'Identifiant ou mot de passe erroné';
+                                        loading = false;
                                   });
                                 }else {
                                   Navigator.of(context).pop();

@@ -7,6 +7,7 @@ class ZoneSaisie extends StatelessWidget {
   final TextInputType keyboardType;
   final TextAlign textAlign;
   final int maxLength;
+  final TextEditingController controller;
   final Function validator;
   ZoneSaisie(
       {this.obscureText,
@@ -15,12 +16,14 @@ class ZoneSaisie extends StatelessWidget {
       this.keyboardType,
       this.textAlign,
       this.maxLength,
-      this.validator});
+      this.validator,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       style: TextStyle(fontSize: 17, fontFamily: 'Actor'),
+      controller: controller,
       validator: validator,
       obscureText: obscureText,
       maxLength: maxLength,

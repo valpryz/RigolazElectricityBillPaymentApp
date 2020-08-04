@@ -46,8 +46,8 @@ Widget listtile(
   return ListTile(
     leading: Icon(icon),
     title: GestureDetector(
-        onTap: onTap,
-          child: Text(
+      onTap: onTap,
+      child: Text(
         title,
         style: TextStyle(color: color, fontSize: 17, fontFamily: 'Actor'),
       ),
@@ -56,12 +56,10 @@ Widget listtile(
       // Navigator.pop(context);
       Navigator.pushNamed(context, url);
     },
-    
   );
 }
 
 class RigolazConnected extends StatelessWidget {
-
   final AuthService _auth = AuthService();
 
   @override
@@ -84,12 +82,38 @@ class RigolazConnected extends StatelessWidget {
               child: ListView(
                 children: <Widget>[
                   DrawerHeader(
-                    child: Column(children: <Widget>[
-                      Image.asset(
-                        'images/logo_rigolaz.png',
-                        width: 150,
-                      )
-                    ]),
+                    child: Stack(
+                      children: <Widget>[
+                        Image.asset(
+                          'images/test.png',
+                          width: 450,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          child: Container(
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Thom5701',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  '014294725701',
+                                  style: TextStyle(color: Colors.grey[500]),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   listtile(
                       title: 'Compte',
@@ -139,7 +163,7 @@ class RigolazConnected extends StatelessWidget {
                       context: context,
                       url: '/astuces',
                       color: kDrawerIsConnected,
-                      onTap: () async{
+                      onTap: () async {
                         await _auth.signOut();
                       })
                   // ListTile(

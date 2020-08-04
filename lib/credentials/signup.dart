@@ -61,7 +61,7 @@ class _SignUpState extends State<SignUp> {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value)) {
-      return 'Email format is invalid';
+      return "Format d'email invalide!!";
     } else {
       return null;
     }
@@ -110,32 +110,44 @@ class _SignUpState extends State<SignUp> {
                             ),
                         SizedBox(height: 10),
                         ZoneSaisie(
-                          obscureText: false,
-                          labelText: 'Numéro Compteur',
-                          maxLength: 12,
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.start,
-                          controller: numeroCompteur,
-                          // onChanged: (value) {
-                          //   setState(() {
-                          //     numeroCompteur = value;
-                          //   });
-                          // },
-                        ),
+                            obscureText: false,
+                            labelText: 'Numéro Compteur',
+                            maxLength: 12,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.start,
+                            controller: numeroCompteur,
+                            // ignore: missing_return
+                            validator: (val) {
+                              if (val.length < 12) {
+                                return "12 chiffres minimum SVP!!";
+                              }
+                            }
+                            // onChanged: (value) {
+                            //   setState(() {
+                            //     numeroCompteur = value;
+                            //   });
+                            // },
+                            ),
                         SizedBox(height: 10),
                         ZoneSaisie(
-                          obscureText: false,
-                          labelText: 'Numéro de Téléphone',
-                          maxLength: 9,
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.start,
-                          controller: numeroTelephone,
-                          // onChanged: (value) {
-                          //   setState(() {
-                          //     numeroTelephone = value;
-                          //   });
-                          // },
-                        ),
+                            obscureText: false,
+                            labelText: 'Numéro de Téléphone',
+                            maxLength: 9,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.start,
+                            controller: numeroTelephone,
+                            // ignore: missing_return
+                            validator: (val) {
+                              if (val.length < 9) {
+                                return "9 chiffres minimum SVP!!";
+                              }
+                            }
+                            // onChanged: (value) {
+                            //   setState(() {
+                            //     numeroTelephone = value;
+                            //   });
+                            // },
+                            ),
                         SizedBox(height: 10),
                         ZoneSaisie(
                           obscureText: false,

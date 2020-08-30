@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:rigolaz_2/models/user.dart';
 
+import 'database.dart';
+
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -36,6 +38,7 @@ class AuthService {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
+
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -44,12 +47,23 @@ class AuthService {
   }
 
   //register with email and password
-  Future registerInWithEmailAndPassword(String email, String password) async {
+  Future registerInWithEmailAndPassword(String email, String password,
+      {String pseudo,
+      String compteur,
+      String telephone,
+      dynamic naissance,
+      dynamic sexe}) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+          email: email.trim(), password: password);
       FirebaseUser user = result.user;
-
+      await DatabaseService(uid: user.uid).updateUserData(
+          pseudo: pseudo,
+          email: email,
+          compteur: compteur,
+          telephone: telephone,
+          naissance: naissance,
+          sexe: sexe);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

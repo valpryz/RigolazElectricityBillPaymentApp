@@ -7,14 +7,11 @@ class BlocComptabilite extends StatefulWidget {
 }
 
 class _BlocComptabiliteState extends State<BlocComptabilite> {
-
   String numeroCompteur = '';
   int montant = 0;
-  
 
   @override
   Widget build(BuildContext context) {
-
     double quantite = montant * 0.18;
 
     return Expanded(
@@ -27,10 +24,16 @@ class _BlocComptabiliteState extends State<BlocComptabilite> {
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 35),
               child: ZoneSaisie(
                 obscureText: false,
+                labelText: 'Numéro Compteur',
                 maxLength: 12,
-                labelText: 'Numéro de Compteur',
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.end,
+                // ignore: missing_return
+                validator: (val) {
+                  if (val.length < 12) {
+                    return "12 chiffres minimum SVP!!";
+                  }
+                },
                 onChanged: (value) {
                   setState(() {
                     numeroCompteur = value;

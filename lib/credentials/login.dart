@@ -43,145 +43,148 @@ class _LoginState extends State<Login> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return loading ? Loading() : SafeArea(
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
-            padding: EdgeInsets.all(5),
-            width: width,
-            height: height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Entete(),
-                Padding(
-                  padding: const EdgeInsets.all(36.0),
-                  child: Form(
-                    key: _loginFormKey,
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          error,
-                          style: TextStyle(color: Colors.red, fontSize: 14.0),
-                        ),
-                        SizedBox(height: 15),
-                        ZoneSaisie(
-                          obscureText: false,
-                          labelText: 'Identifiant',
-                          textAlign: TextAlign.start,
-                          validator: emailValidator,
-                          onChanged: (val) {
-                            setState(() {
-                              identifiant = val;
-                            });
-                          },
-                        ),
-                        SizedBox(height: 15),
-                        ZoneSaisie(
-                          obscureText: true,
-                          labelText: 'Mot de passe',
-                          textAlign: TextAlign.start,
-                          validator: pwdValidator,
-                          onChanged: (val) {
-                            setState(() {
-                              motDePasse = val;
-                            });
-                          },
-                        ),
-                        SizedBox(height: 15),
-                        Container(
-                          width: width,
-                          child: RaisedButton(
-                            padding: EdgeInsets.all(15),
-                            color: Colors.blue,
-                            child: Text(
-                              'SE CONNECTER',
-                              style: TextStyle(
-                                color: Colors.white,
+    return loading
+        ? Loading()
+        : SafeArea(
+            child: Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: Container(
+                  padding: EdgeInsets.all(5),
+                  width: width,
+                  height: height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Entete(),
+                      Padding(
+                        padding: const EdgeInsets.all(36.0),
+                        child: Form(
+                          key: _loginFormKey,
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                error,
+                                style: TextStyle(
+                                    color: Colors.red, fontSize: 14.0),
                               ),
-                            ),
-                            onPressed: () async {
-                              // dynamic result = await _auth.signInAnon();
-                              // if (result == null) {
-                              //   print('error signing in');
-                              // } else {
-                              //   print('signed in');
-                              //   print(result.uid);
-                              // }
-
-                              if (_loginFormKey.currentState.validate()) {
-                                print(motDePasse);
-                                print(identifiant);
-                                setState(() {
-                                  loading = true;
-                                });
-                                dynamic result =
-                                    await _auth.signInWithEmailAndPassword(
-                                        identifiant, motDePasse);
-                                if (result == null) {
+                              SizedBox(height: 15),
+                              ZoneSaisie(
+                                obscureText: false,
+                                labelText: 'Identifiant',
+                                textAlign: TextAlign.start,
+                                validator: emailValidator,
+                                onChanged: (val) {
                                   setState(() {
-                                    error =
-                                        'Identifiant ou mot de passe erroné';
-                                        loading = false;
+                                    identifiant = val;
                                   });
-                                }else {
-                                  Navigator.of(context).pop();
-                                }
-                              }
-                            },
+                                },
+                              ),
+                              SizedBox(height: 15),
+                              ZoneSaisie(
+                                obscureText: true,
+                                labelText: 'Mot de passe',
+                                textAlign: TextAlign.start,
+                                validator: pwdValidator,
+                                onChanged: (val) {
+                                  setState(() {
+                                    motDePasse = val;
+                                  });
+                                },
+                              ),
+                              SizedBox(height: 15),
+                              Container(
+                                width: width,
+                                child: RaisedButton(
+                                  padding: EdgeInsets.all(15),
+                                  color: Colors.blue,
+                                  child: Text(
+                                    'SE CONNECTER',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    // dynamic result = await _auth.signInAnon();
+                                    // if (result == null) {
+                                    //   print('error signing in');
+                                    // } else {
+                                    //   print('signed in');
+                                    //   print(result.uid);
+                                    // }
+
+                                    if (_loginFormKey.currentState.validate()) {
+                                      print(motDePasse);
+                                      print(identifiant);
+                                      setState(() {
+                                        loading = true;
+                                      });
+                                      dynamic result = await _auth
+                                          .signInWithEmailAndPassword(
+                                              identifiant, motDePasse);
+                                      if (result == null) {
+                                        setState(() {
+                                          error =
+                                              'Identifiant ou mot de passe erroné';
+                                          loading = false;
+                                        });
+                                      } else {
+                                        Navigator.of(context).pop();
+                                      }
+                                    }
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ForgotPass(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Mot de passe oublié ?',
+                                  style: TextStyle(
+                                      fontFamily: 'Actor',
+                                      fontSize: 17,
+                                      color: Colors.blue),
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                        SizedBox(height: 5),
-                        FlatButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ForgotPass(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Mot de passe oublié ?',
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Nouveau?',
                             style: TextStyle(
                                 fontFamily: 'Actor',
-                                fontSize: 17,
-                                color: Colors.blue),
+                                fontSize: 18,
+                                color: Colors.grey),
                           ),
-                        )
-                      ],
-                    ),
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, '/se_connecter/s_inscrire');
+                            },
+                            child: Text(
+                              "S'enregistrer",
+                              style: TextStyle(
+                                  fontFamily: 'Actor',
+                                  fontSize: 18,
+                                  color: Colors.blue),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Nouveau?',
-                      style: TextStyle(
-                          fontFamily: 'Actor',
-                          fontSize: 18,
-                          color: Colors.grey),
-                    ),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, '/se_connecter/s_inscrire');
-                      },
-                      child: Text(
-                        "S'enregistrer",
-                        style: TextStyle(
-                            fontFamily: 'Actor',
-                            fontSize: 18,
-                            color: Colors.blue),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          )),
-    );
+                )),
+          );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rigolaz_2/credentials/forgotpassotp.dart';
 import 'package:rigolaz_2/credentials/zone_saisie.dart';
 import 'entete.dart';
 
@@ -62,7 +63,14 @@ class _ForgotPassState extends State<ForgotPass> {
                         padding: const EdgeInsets.all(16.0),
                         child: RaisedButton(
                           color: Colors.blue,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ForgotPassOTP(),
+                              ),
+                            );
+                          },
                           child: Text(
                             'OK',
                             style: TextStyle(color: Colors.white),

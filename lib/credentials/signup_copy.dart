@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rigolaz_2/credentials/entete.dart';
-import 'package:rigolaz_2/credentials/signup_message.dart';
 import 'package:rigolaz_2/credentials/signup_verification.dart';
 import 'package:rigolaz_2/services/auth.dart';
 import 'package:rigolaz_2/services/password_generator.dart';
@@ -20,12 +19,12 @@ class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
   bool loading = false;
 
-  String pseudo;
-  String numeroCompteur;
-  String numeroTelephone;
+  TextEditingController pseudo;
+  TextEditingController numeroCompteur;
+  TextEditingController numeroTelephone;
   String adresseMail;
   String error = '';
-  String _generatedPassword = generatePassword(true, true, true, false, 9);
+  String _generatedPassword = generatePassword(true, true, true, true, 8);
 
   var finaldate;
 
@@ -55,9 +54,9 @@ class _SignUpState extends State<SignUp> {
 
   @override
   initState() {
-    pseudo = "";
-    numeroCompteur = "";
-    numeroTelephone = "";
+    pseudo = TextEditingController();
+    numeroCompteur = TextEditingController();
+    numeroTelephone = TextEditingController();
     adresseMail = "";
     super.initState();
   }
@@ -101,61 +100,62 @@ class _SignUpState extends State<SignUp> {
                             children: <Widget>[
                               Text(error),
                               ZoneSaisie(
-                                // controller: pseudo,
-                                obscureText: false,
-                                labelText: 'Pseudo',
-                                textAlign: TextAlign.start,
-                                // ignore: missing_return
-                                validator: (val) {
-                                  if (val.length < 3) {
-                                    return "Entrez un pseudo valide!";
+                                  controller: pseudo,
+                                  obscureText: false,
+                                  labelText: 'Pseudo',
+                                  textAlign: TextAlign.start,
+                                  // ignore: missing_return
+                                  validator: (val) {
+                                    if (val.length < 3) {
+                                      return "Entrez un pseudo valide!";
+                                    }
                                   }
-                                },
-                                onChanged: (value) {
-                                  setState(() {
-                                    pseudo = value;
-                                  });
-                                },
-                              ),
+                                  // onChanged: (value) {
+                                  //   setState(() {
+                                  //     pseudo = value;
+                                  //   });
+                                  // },
+                                  ),
                               SizedBox(height: 10),
                               ZoneSaisie(
-                                obscureText: false,
-                                labelText: 'Numéro Compteur',
-                                maxLength: 12,
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.start,
-                                // ignore: missing_return
-                                validator: (val) {
-                                  if (val.length < 12) {
-                                    return "12 chiffres minimum SVP!!";
+                                  obscureText: false,
+                                  labelText: 'Numéro Compteur',
+                                  maxLength: 12,
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.start,
+                                  controller: numeroCompteur,
+                                  // ignore: missing_return
+                                  validator: (val) {
+                                    if (val.length < 12) {
+                                      return "12 chiffres minimum SVP!!";
+                                    }
                                   }
-                                },
-                                onChanged: (value) {
-                                  setState(() {
-                                    numeroCompteur = value;
-                                  });
-                                },
-                              ),
+                                  // onChanged: (value) {
+                                  //   setState(() {
+                                  //     numeroCompteur = value;
+                                  //   });
+                                  // },
+                                  ),
                               SizedBox(height: 10),
                               ZoneSaisie(
-                                obscureText: false,
-                                labelText: 'Numéro de Téléphone',
-                                maxLength: 9,
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.start,
-                                // controller: numeroTelephone,
-                                // ignore: missing_return
-                                validator: (val) {
-                                  if (val.length < 9) {
-                                    return "9 chiffres minimum SVP!!";
+                                  obscureText: false,
+                                  labelText: 'Numéro de Téléphone',
+                                  maxLength: 9,
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.start,
+                                  controller: numeroTelephone,
+                                  // ignore: missing_return
+                                  validator: (val) {
+                                    if (val.length < 9) {
+                                      return "9 chiffres minimum SVP!!";
+                                    }
                                   }
-                                },
-                                onChanged: (value) {
-                                  setState(() {
-                                    numeroTelephone = value;
-                                  });
-                                },
-                              ),
+                                  // onChanged: (value) {
+                                  //   setState(() {
+                                  //     numeroTelephone = value;
+                                  //   });
+                                  // },
+                                  ),
                               SizedBox(height: 10),
                               ZoneSaisie(
                                 obscureText: false,
@@ -163,11 +163,11 @@ class _SignUpState extends State<SignUp> {
                                 textAlign: TextAlign.start,
                                 // controller: adresseMail,
                                 validator: emailValidator,
-                                onChanged: (value) {
-                                  setState(() {
-                                    adresseMail = value;
-                                  });
-                                },
+                                // onChanged: (value) {
+                                //   setState(() {
+                                //     adresseMail = value;
+                                //   });
+                                // },
                               ),
                               //SizedBox(height: 10),
                               Row(
@@ -262,51 +262,41 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                             onPressed: () async {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => SignUpVerification(),
-                              //   ),
-                              // );
-                              if (_registerFormKey.currentState.validate()) {
-                                print(pseudo);
-                                print(numeroCompteur);
-                                print(numeroTelephone);
-                                print(adresseMail);
-                                print(finaldate);
-                                print(_gender);
-                                print(_generatedPassword);
-                                // pseudo.clear();
-                                // numeroCompteur.clear();
-                                // numeroTelephone.clear();
-                                // adresseMail.clear();
-                                setState(() {
-                                  loading = true;
-                                });
-                                dynamic result =
-                                    await _auth.registerInWithEmailAndPassword(
-                                        adresseMail, _generatedPassword,
-                                        pseudo: pseudo,
-                                        compteur: numeroCompteur,
-                                        telephone: numeroTelephone,
-                                        naissance: finaldate,
-                                        sexe: _gender);
-                                if (result == null) {
-                                  setState(() {
-                                    error =
-                                        'Identifiant ou mot de passe erroné';
-                                    loading = false;
-                                  });
-                                } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          SignUpVerification(),
-                                    ),
-                                  );
-                                }
-                              }
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignUpVerification(),
+                                ),
+                              );
+                              // if (_registerFormKey.currentState.validate()) {
+                              //   print(pseudo);
+                              //   print(numeroCompteur);
+                              //   print(numeroTelephone);
+                              //   print(adresseMail);
+                              //   print(finaldate);
+                              //   print(_gender);
+                              //   print(_generatedPassword);
+                              //   pseudo.clear();
+                              //   numeroCompteur.clear();
+                              //   numeroTelephone.clear();
+                              //   // adresseMail.clear();
+                              //   setState(() {
+                              //     loading = true;
+                              //   });
+                              //   dynamic result =
+                              //       await _auth.registerInWithEmailAndPassword(
+                              //           adresseMail.toString(),
+                              //           _generatedPassword);
+                              //   if (result == null) {
+                              //     setState(() {
+                              //       error =
+                              //           'Identifiant ou mot de passe erroné';
+                              //       loading = false;
+                              //     });
+                              //   } else {
+                              //     Navigator.of(context).pop();
+                              //   }
+                              // }
                             },
                           ),
                         )

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rigolaz_2/credentials/zone_saisie.dart';
 import 'package:rigolaz_2/moncompte/suppressionMessage.dart';
-
 import '../constants.dart';
-import 'modificationMessage.dart';
 
 class SupprimerCompte extends StatefulWidget {
   @override
@@ -112,7 +110,7 @@ class _SupprimerCompteState extends State<SupprimerCompte> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ModificationMessage(),
+                        builder: (context) => SuppressionMessage(),
                       ),
                     );
                   },
